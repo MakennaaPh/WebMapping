@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <title>Three Maps</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!-- Mapbox JS -->
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+
+  <!-- Mapbox CSS -->
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
+
+  <style>
+    body {
+      margin: 50px;
+      padding: 0;
+    }
+
+    #map1, #map2, #map3 {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Map 1:</h1>
+  <div id='map1'></div>
+  <hr>
+
+  <h1>Map 2:</h1>
+  <div id='map2'></div>
+  <hr>
+
+  <h1>Map 3:</h1>
+  <div id='map3'></div>
+
+  <script>
+    // Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFrZW5uYWFwaGlsbGlwcyIsImEiOiJjbW5wNGk0dDgyYzlrMnJxNXI4dDdzMHc1In0.iFOEbvb6cI1ZBb1o0Qcl8g';
+
+    // -------- MAP 1 --------
+    var map = new mapboxgl.Map({
+      container: 'map1',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-6.2603, 53.3498],
+      zoom: 11
+    });
+
+    var popup1 = new mapboxgl.Popup()
+      .setText('Home Base');
+
+    var marker1 = new mapboxgl.Marker({ color: 'yellowgreen' })
+      .setLngLat([-6.22919, 53.34943])
+      .setPopup(popup1)
+      .addTo(map);
+
+    map.scrollZoom.disable();
+    map.boxZoom.disable();
+    map.dragRotate.disable();
+    map.dragPan.disable();
+    map.keyboard.disable();
+    map.doubleClickZoom.disable();
+    map.touchZoomRotate.disable();
+
+    // -------- MAP 2 --------
+    var map2 = new mapboxgl.Map({
+      container: 'map2',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-9.0568, 53.2707], // Galway
+      zoom: 7
+    });
+
+    var popup2 = new mapboxgl.Popup()
+      .setText('Cliffs of Moher');
+
+    var marker2 = new mapboxgl.Marker({ color: 'darkgreen' })
+      .setLngLat([-9.4309, 52.9715]) // Cliffs of Moher
+      .setPopup(popup2)
+      .addTo(map2);
+
+    map2.dragPan.disable();
+    map2.scrollZoom.disable();
+    map2.boxZoom.disable();
+    map2.dragRotate.disable();
+    map2.keyboard.disable();
+    map2.doubleClickZoom.disable();
+    map2.touchZoomRotate.disable();
+    map2.touchZoomRotate.disableRotation();
+
+    // -------- MAP 3 --------
+    var map3 = new mapboxgl.Map({
+      container: 'map3',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-7.2523, 52.6541], // Kilkenny
+      zoom: 11
+    });
+
+    var popup3 = new mapboxgl.Popup()
+      .setText('St Canice Cathedral');
+
+    var marker3 = new mapboxgl.Marker({ color: 'seagreen' })
+      .setLngLat([-7.2560, 52.6579]) // St Canice Cathedral
+      .setPopup(popup3)
+      .addTo(map3);
+
+    map3.dragPan.disable();
+    map3.scrollZoom.disable();
+    map3.boxZoom.disable();
+    map3.dragRotate.disable();
+    map3.keyboard.disable();
+    map3.doubleClickZoom.disable();
+    map3.touchZoomRotate.disable();
+    map3.touchZoomRotate.disableRotation();
+
+    // -------- CURSOR SETTINGS --------
+    map.getCanvas().style.cursor = 'auto';
+    map2.getCanvas().style.cursor = 'auto';
+    map3.getCanvas().style.cursor = 'auto';
+
+  </script>
+
+</body>
+
+</html>
