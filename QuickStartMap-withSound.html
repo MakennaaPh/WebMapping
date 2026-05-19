@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>University of Oregon Mapping</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js"></script>
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Calibri, Arial, sans-serif;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .mapboxgl-popup {
+      min-width: 325px;
+      font-family: Calibri, Arial, sans-serif;
+      font-size: 1em;
+    }
+
+    .button-container {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .fly {
+      width: 180px;
+      padding: 10px;
+      border: 2px solid white;
+      border-radius: 6px;
+      font-size: 1em;
+      text-align: center;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      font-family: Calibri, Arial, sans-serif;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .fly:hover {
+      opacity: 0.8;
+      transform: scale(1.03);
+      cursor: pointer;
+    }
+
+    #PortlandButton {
+      background: #2E86AB;
+    }
+
+    #LondonButton {
+      background: #A23B72;
+    }
+
+    #YellowstoneButton {
+      background: #F18F01;
+    }
+
+    .popupImage {
+      width: 100%;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <div class="button-container">
+    <button class="fly" id="PortlandButton">Jump to Portland</button>
+    <button class="fly" id="LondonButton">Jump to London</button>
+    <button class="fly" id="YellowstoneButton">Jump to Yellowstone</button>
+  </div>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoiam9tZXJzb24iLCJhIjoiY2o1bXE2bHlyMnJhZDMzbnpyMnhlODdpcSJ9.QJMJ_cTFCY050aZfSn1umQ';
+
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/outdoors-v11',
+      center: [-122.6788, 45.5212],
+      zoom: 4
+    });
+
+    var popup1_content = '<h2>Play the video to listen to Portland</h2><br>';
+    popup1_content += '<iframe width="300px" src="https://www.youtube.com/embed/z1AdmS-LqyA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    popup1_content += '<p>Source: Ian Lind, <a href="https://www.youtube.com/embed/z1AdmS-LqyA" target="_blank">YouTube</a></p>';
+
+    var popup1 = new mapboxgl.Popup({ minWidth: '300px' }).setHTML(popup1_content);
+
+    var popup2_content = '<h2>Press play to listen to London in 1928</h2><br>';
+    popup2_content += '<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A892653091&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>';
+    popup2_content += '<p>Source: LondonStreetNoises.co.uk, <a href="https://soundcloud.com/londonstreetnoises" target="_blank">SoundCloud</a></p>';
+
+    var popup2 = new mapboxgl.Popup({ minWidth: '300px' }).setHTML(popup2_content);
+
+    var popup3_content = '<h2>Press play to listen to a bison eating</h2><br>';
+    popup3_content += '<audio controls><source src="sounds/yell-YELLBisonEating150313.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>';
+    popup3_content += '<p>Source: NPS/Jennifer Jerret, <a href="https://www.nps.gov/yell/learn/photosmultimedia/sounds-bisoneating.htm" target="_blank">NPS</a></p>';
+    popup3_content += '<img class="popupImage" src="https://www.nps.gov/yell/learn/photosmultimedia/images/ndh-yell-bison-gibbon_2.jpg?maxwidth=1200&maxheight=1200&autorotate=false" alt="A large bison standing in a grassy area in Yellowstone National Park.">';
+    popup3_content += '<p>Source: NPS/Neal Herbert, <a href="https://www.nps.gov/yell/learn/photosmultimedia/sounds-bisoneating.htm" target="_blank">NPS</a></p>';
+
+    var popup3 = new mapboxgl.Popup({ minWidth: '300px' }).setHTML(popup3_content);
+
+    var marker1 = new mapboxgl.Marker({ color: '#2E86AB' })
+      .setLngLat([-122.6788, 45.5212])
+      .setPopup(popup1)
+      .addTo(map);
+
+    var marker2 = new mapboxgl.Marker({ color: '#A23B72' })
+      .setLngLat([-0.1534307, 51.501223])
+      .setPopup(popup2)
+      .addTo(map);
+
+    var marker3 = new mapboxgl.Marker({ color: '#F18F01' })
+      .setLngLat([-110.74524187568, 44.706216445069])
+      .setPopup(popup3)
+      .addTo(map);
+
+    document.getElementById('PortlandButton').addEventListener('click', function () {
+      map.jumpTo({
+        center: [-122.6788, 45.5212],
+        zoom: 9
+      });
+    });
+
+    document.getElementById('LondonButton').addEventListener('click', function () {
+      map.jumpTo({
+        center: [-0.1534307, 51.501223],
+        zoom: 11
+      });
+    });
+
+    document.getElementById('YellowstoneButton').addEventListener('click', function () {
+      map.jumpTo({
+        center: [-110.74524187568, 44.706216445069],
+        zoom: 9
+      });
+    });
+  </script>
+</body>
+</html>
